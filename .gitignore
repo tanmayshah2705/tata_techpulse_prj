@@ -11,4 +11,5 @@ dist/
 build/
 .idea/
 .vscode/
-*.log
+*.log
+*.zip

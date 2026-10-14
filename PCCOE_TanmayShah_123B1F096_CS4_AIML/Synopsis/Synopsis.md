@@ -77,7 +77,7 @@ Streamlit UI (app.py)
 |-----------|------------|
 | Language | Python 3.11+ |
 | UI | Streamlit |
-| LLM | Google Gemini (gemini-2.0-flash) |
+| LLM | Google Gemini (gemini-flash-lite-latest, google-genai SDK) |
 | Static Analysis | Python `ast` module + `re` |
 | Guideline Retrieval | scikit-learn TF-IDF |
 | Knowledge Base | Local JSON |

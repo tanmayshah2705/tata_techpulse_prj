@@ -81,7 +81,7 @@ GEMINI_API_KEY=your_api_key_here
 > 🔒 **Never commit `.env` to version control.** It is already in `.gitignore`.
 
 The Gemini model is configured in `Model_Prompts_Config/model_config.json`.  
-Default: `gemini-2.0-flash`
+Default: `gemini-flash-lite-latest` (with automatic Lite fallbacks)
 
 ---
 

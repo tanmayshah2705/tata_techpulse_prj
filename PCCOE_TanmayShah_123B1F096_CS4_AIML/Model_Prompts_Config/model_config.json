@@ -1,8 +1,14 @@
 {
   "provider": "Google Generative AI (Gemini)",
-  "model_name": "gemini-3.8-flash",
+  "model_name": "gemini-flash-lite-latest",
+  "fallback_models": [
+    "gemini-flash-lite-latest",
+    "gemini-3.5-flash-lite",
+    "gemini-3.1-flash-lite",
+    "gemini-3.8-flash"
+  ],
   "previous_model_name": "gemini-2.0-flash",
-  "deprecation_note": "gemini-2.0-flash and gemini-2.5-flash are no longer available to new users. The API recommends gemini-3.8-flash as the successor. Updated 2026-10-14.",
+  "deprecation_note": "gemini-2.0-flash and gemini-2.5-flash are discontinued. gemini-flash-lite-latest provides stable 200 OK responses with high throughput and low latency, bypassing standard Flash 503 capacity limits.",
   "runtime_architecture": "External REST API (google-genai Python SDK)",
   "external_api_dependency": true,
   "api_key_source": "Environment variable GEMINI_API_KEY loaded via python-dotenv",
@@ -14,11 +20,10 @@
   "api_method": "client.models.generate_content with GenerateContentConfig",
   "known_limitations": [
     "Requires a valid GEMINI_API_KEY with quota.",
-    "gemini-3.8-flash may return HTTP 503 (temporarily unavailable) during high-demand periods; this is transient — retry after 30 seconds.",
-    "Gemini-generated line numbers are heuristic and not guaranteed to match submitted code.",
-    "LLM findings are advisory only; not confirmed vulnerabilities.",
-    "Static analysis covers a limited rule set; not a replacement for a certified SAST tool.",
-    "Model availability subject to Google API changes; update model_name here if a 404 NOT_FOUND error is received."
+    "Gemini findings are advisory only and must be verified against source code.",
+    "Line numbers returned by LLMs are approximate heuristics.",
+    "External API dependency requires active internet connectivity for AI review.",
+    "Static analyzer rules provide deterministic first-pass checks, not full MISRA compliance certification."
   ],
-  "notes": "Model name is configurable in this file and read at runtime by gemini_integration.py."
+  "notes": "Configurable model definition read at runtime by Code/gemini_integration.py."
 }

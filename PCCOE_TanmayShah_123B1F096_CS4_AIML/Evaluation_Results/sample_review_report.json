@@ -1,0 +1,78 @@
+{
+  "report_meta": {
+    "tool": "AutoCodeGuard",
+    "version": "1.0.0",
+    "generated_at": "2026-10-14T13:54:40",
+    "language": "python",
+    "source_lines": 4
+  },
+  "static_analysis": {
+    "language": "python",
+    "findings": [
+      {
+        "rule_id": "ACG-PY-001",
+        "severity": "HIGH",
+        "line": 3,
+        "column": 13,
+        "title": "Potential use of dynamic code execution: eval()",
+        "evidence": "result = eval(user_input)",
+        "explanation": "`eval()` can execute arbitrary code. If user-controlled data is passed, this is a code-injection risk.",
+        "recommendation": "Avoid `eval()`. Replace with explicit logic, safe parsers (e.g., ast.literal_eval for data), or dedicated APIs.",
+        "language": "python",
+        "is_potential": true
+      }
+    ],
+    "syntax_error": null
+  },
+  "gemini_review": {
+    "summary": "The provided code contains a critical security vulnerability due to the direct use of the built-in eval() function on untrusted user input, which allows arbitrary code execution.",
+    "findings": [
+      {
+        "severity": "HIGH",
+        "title": "Arbitrary Code Execution via eval()",
+        "approximate_line": 3,
+        "evidence": "result = eval(user_input)",
+        "explanation": "Using eval() on unsanitized user input allows an attacker to execute arbitrary Python code within the context of the running application, presenting severe safety and security risks in an automotive software environment.",
+        "recommendation": "Remove the use of eval() entirely. If evaluating mathematical expressions is required, use a safe, restricted parser or predefined command mapping instead of dynamic code evaluation."
+      }
+    ],
+    "overall_risk": "HIGH",
+    "error": null,
+    "model_used": "gemini-flash-lite-latest"
+  },
+  "guidelines": {
+    "ACG-PY-001:3": [
+      {
+        "id": "GEN-004",
+        "category": "General",
+        "title": "Avoid use of eval() and exec()",
+        "description": "Dynamic code execution functions can execute arbitrary code injected by an attacker. Prefer explicit logic or safe parsers.",
+        "severity": "HIGH",
+        "tags": [
+          "eval",
+          "exec",
+          "dynamic",
+          "code_injection"
+        ],
+        "source": "General best practice (OWASP A03)",
+        "score": 0.4968184853890717
+      },
+      {
+        "id": "GEN-005",
+        "category": "General",
+        "title": "Avoid shell injection via subprocess",
+        "description": "Passing shell=True with user-controlled strings to subprocess functions allows command injection. Use a list of arguments instead.",
+        "severity": "HIGH",
+        "tags": [
+          "subprocess",
+          "shell",
+          "injection",
+          "command",
+          "os.system"
+        ],
+        "source": "General best practice (OWASP A03)",
+        "score": 0.11393197059789173
+      }
+    ]
+  }
+}

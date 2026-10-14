@@ -25,11 +25,11 @@ load_dotenv()
 
 _CONFIG_PATH = Path(__file__).parent.parent / "Model_Prompts_Config" / "model_config.json"
 
-_FALLBACK_MODEL = "gemini-3.8-flash"
+_FALLBACK_MODEL = "gemini-flash-lite-latest"
 
 
 def _load_model_name() -> str:
-    """Load model name from model_config.json; fall back to gemini-3.8-flash."""
+    """Load model name from model_config.json; fall back to gemini-flash-lite-latest."""
     try:
         with open(_CONFIG_PATH, "r", encoding="utf-8") as fh:
             cfg = json.load(fh)
@@ -89,9 +89,10 @@ _USER_PROMPT_TEMPLATE = textwrap.dedent("""\
 # Ordered list of fallback model names tried when the primary model is unavailable.
 # Primary model is read from model_config.json; these are automatic fallbacks on 503.
 _FALLBACK_MODELS = [
+    "gemini-flash-lite-latest",
+    "gemini-3.5-flash-lite",
+    "gemini-3.1-flash-lite",
     "gemini-3.8-flash",
-    "gemini-3.6-flash",
-    "gemini-3.5-flash",
 ]
 
 
