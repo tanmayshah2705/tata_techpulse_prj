@@ -2,7 +2,7 @@
 
 ## Prompt Design
 
-### System Prompt (sent to Gemini)
+### System Prompt (sent to claude)
 
 ```
 You are an automotive software security expert reviewing source code
