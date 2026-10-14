@@ -1,0 +1,146 @@
+[
+  {
+    "id": "GEN-001",
+    "category": "General",
+    "title": "Avoid hardcoded credentials",
+    "description": "Passwords, API keys, and secrets must never appear as string literals in source code. Use environment variables or a secrets manager.",
+    "severity": "HIGH",
+    "tags": ["secret", "credential", "password", "api_key", "hardcode"],
+    "source": "General best practice (OWASP A02)"
+  },
+  {
+    "id": "GEN-002",
+    "category": "General",
+    "title": "Validate and sanitise all external input",
+    "description": "All data from users, files, or networks must be validated before use. Lack of validation leads to injection and type-confusion defects.",
+    "severity": "HIGH",
+    "tags": ["input", "validation", "sanitise", "injection", "user_input"],
+    "source": "General best practice (OWASP A03)"
+  },
+  {
+    "id": "GEN-003",
+    "category": "General",
+    "title": "Handle exceptions and return error codes explicitly",
+    "description": "Functions should not silently ignore exceptions. Unhandled exceptions can crash embedded systems or leave them in undefined states.",
+    "severity": "MEDIUM",
+    "tags": ["exception", "error", "try", "catch", "bare_except", "unhandled"],
+    "source": "General best practice"
+  },
+  {
+    "id": "GEN-004",
+    "category": "General",
+    "title": "Avoid use of eval() and exec()",
+    "description": "Dynamic code execution functions can execute arbitrary code injected by an attacker. Prefer explicit logic or safe parsers.",
+    "severity": "HIGH",
+    "tags": ["eval", "exec", "dynamic", "code_injection"],
+    "source": "General best practice (OWASP A03)"
+  },
+  {
+    "id": "GEN-005",
+    "category": "General",
+    "title": "Avoid shell injection via subprocess",
+    "description": "Passing shell=True with user-controlled strings to subprocess functions allows command injection. Use a list of arguments instead.",
+    "severity": "HIGH",
+    "tags": ["subprocess", "shell", "injection", "command", "os.system"],
+    "source": "General best practice (OWASP A03)"
+  },
+  {
+    "id": "MIS-001",
+    "category": "MISRA-inspired",
+    "title": "All variables must be initialised before use",
+    "description": "MISRA C:2012 Rule 9.1 — Objects should not be read before being written. Uninitialised variables cause undefined behaviour.",
+    "severity": "HIGH",
+    "tags": ["uninitialised", "undefined", "variable", "init"],
+    "source": "MISRA C:2012 Rule 9.1 (reference only — not a certified citation)"
+  },
+  {
+    "id": "MIS-002",
+    "category": "MISRA-inspired",
+    "title": "Avoid dynamic memory allocation in safety-critical paths",
+    "description": "MISRA C:2012 Rule 21.3 — malloc/free should not be used in safety-critical software due to fragmentation and non-determinism.",
+    "severity": "MEDIUM",
+    "tags": ["malloc", "free", "dynamic_memory", "heap", "alloc"],
+    "source": "MISRA C:2012 Rule 21.3 (reference only — not a certified citation)"
+  },
+  {
+    "id": "MIS-003",
+    "category": "MISRA-inspired",
+    "title": "Limit recursion depth; prefer iterative implementations",
+    "description": "MISRA C:2012 Rule 17.2 — Recursive functions shall not be used. Recursion makes stack depth hard to bound in embedded systems.",
+    "severity": "MEDIUM",
+    "tags": ["recursion", "recursive", "stack", "depth"],
+    "source": "MISRA C:2012 Rule 17.2 (reference only — not a certified citation)"
+  },
+  {
+    "id": "AUT-001",
+    "category": "Automotive",
+    "title": "Verify return values of safety-critical function calls",
+    "description": "ISO 26262 Part 6 — All results of functions in safety paths must be checked. Ignoring return values can mask faults.",
+    "severity": "HIGH",
+    "tags": ["return_value", "ignored", "unchecked", "safety", "fault"],
+    "source": "ISO 26262:2018 Part 6 (reference only — not a certified citation)"
+  },
+  {
+    "id": "AUT-002",
+    "category": "Automotive",
+    "title": "Use time-out mechanisms for all blocking operations",
+    "description": "Blocking calls without timeouts can cause deadlock in real-time vehicle systems. Always specify a maximum wait duration.",
+    "severity": "HIGH",
+    "tags": ["timeout", "blocking", "deadlock", "real_time", "wait"],
+    "source": "ISO 26262:2018 Part 6 (reference only — not a certified citation)"
+  },
+  {
+    "id": "AUT-003",
+    "category": "Automotive",
+    "title": "Protect shared resources with appropriate synchronisation",
+    "description": "ISO/SAE 21434 and ISO 26262 — Race conditions in shared data structures can lead to safety and security faults.",
+    "severity": "HIGH",
+    "tags": ["race_condition", "mutex", "lock", "shared", "concurrent", "thread"],
+    "source": "ISO 26262:2018 Part 6 / ISO/SAE 21434:2021 (reference only — not a certified citation)"
+  },
+  {
+    "id": "AUT-004",
+    "category": "Automotive",
+    "title": "Implement secure boot and integrity checks",
+    "description": "ISO/SAE 21434 — ECU firmware must be verified before execution to prevent tampering. Use cryptographic signatures.",
+    "severity": "HIGH",
+    "tags": ["secure_boot", "integrity", "firmware", "ecu", "signature", "verification"],
+    "source": "ISO/SAE 21434:2021 (reference only — not a certified citation)"
+  },
+  {
+    "id": "AUT-005",
+    "category": "Automotive",
+    "title": "Limit CAN/bus message trust: validate sender and content",
+    "description": "Vehicle bus messages must not be blindly trusted. Validate message IDs, lengths, and checksums before acting on them.",
+    "severity": "HIGH",
+    "tags": ["can_bus", "message", "validation", "checksum", "sender", "trust"],
+    "source": "ISO/SAE 21434:2021 (reference only — not a certified citation)"
+  },
+  {
+    "id": "SEC-001",
+    "category": "Security",
+    "title": "Use strong, well-reviewed cryptographic algorithms",
+    "description": "Avoid MD5, SHA-1, DES, or custom cryptography. Use AES-256, SHA-256/SHA-3, and established TLS libraries.",
+    "severity": "HIGH",
+    "tags": ["md5", "sha1", "des", "cryptography", "weak_cipher", "hash"],
+    "source": "NIST SP 800-131A, OWASP Cryptographic Failures"
+  },
+  {
+    "id": "SEC-002",
+    "category": "Security",
+    "title": "Sanitise path inputs to prevent directory traversal",
+    "description": "File paths built from user input must be validated. Directory traversal can expose or overwrite sensitive files.",
+    "severity": "HIGH",
+    "tags": ["path_traversal", "directory", "file", "traversal", "../", "open"],
+    "source": "OWASP A01, CWE-22"
+  },
+  {
+    "id": "SEC-003",
+    "category": "Security",
+    "title": "Use parameterised queries; never concatenate SQL strings",
+    "description": "String concatenation in SQL queries leads to injection. Use prepared statements or ORM query builders.",
+    "severity": "HIGH",
+    "tags": ["sql", "injection", "query", "concatenate", "format", "execute"],
+    "source": "OWASP A03, CWE-89"
+  }
+]

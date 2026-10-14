@@ -1,0 +1,49 @@
+======================================================================
+AutoCodeGuard — Static Analyzer Evaluation Summary
+Generated: 2026-10-14T13:05:39.134213
+======================================================================
+
+Test cases run  : 12
+
+Aggregate Metrics (Static Analyzer Only):
+  True Positives  (TP) : 15
+  False Positives (FP) : 0
+  False Negatives (FN) : 0
+  Precision            : 1.0000
+  Recall               : 1.0000
+  F1 Score             : 1.0000
+
+Per-Rule Metrics:
+  ACG-PY-001      TP=2 FP=0 FN=0 P=1.00 R=1.00 F1=1.00
+  ACG-PY-002      TP=1 FP=0 FN=0 P=1.00 R=1.00 F1=1.00
+  ACG-PY-003      TP=2 FP=0 FN=0 P=1.00 R=1.00 F1=1.00
+  ACG-PY-004      TP=1 FP=0 FN=0 P=1.00 R=1.00 F1=1.00
+  ACG-PY-005      TP=1 FP=0 FN=0 P=1.00 R=1.00 F1=1.00
+  ACG-PY-006      TP=1 FP=0 FN=0 P=1.00 R=1.00 F1=1.00
+  ACG-RE-001      TP=2 FP=0 FN=0 P=1.00 R=1.00 F1=1.00
+  ACG-RE-002      TP=1 FP=0 FN=0 P=1.00 R=1.00 F1=1.00
+  ACG-RE-003      TP=1 FP=0 FN=0 P=1.00 R=1.00 F1=1.00
+  ACG-RE-004      TP=1 FP=0 FN=0 P=1.00 R=1.00 F1=1.00
+  ACG-RE-005      TP=1 FP=0 FN=0 P=1.00 R=1.00 F1=1.00
+  ACG-RE-006      TP=1 FP=0 FN=0 P=1.00 R=1.00 F1=1.00
+
+Per-Case Results:
+  [PASS] TC-001: Python code with eval() and bare except
+  [PASS] TC-002: Hardcoded password and MD5 hash
+  [PASS] TC-003: subprocess with shell=True
+  [PASS] TC-004: SQL query built with string formatting
+  [PASS] TC-005: Mutable default argument
+  [PASS] TC-006: DEBUG=True and print statements
+  [PASS] TC-007: assert used for input validation
+  [PASS] TC-008: os.system() call
+  [PASS] TC-009: Multiple issues: eval + hardcoded secret + bare except
+  [PASS] TC-010: Safe code — no issues expected
+  [PASS] TC-011: Safe code with explicit exception handling
+  [PASS] TC-012: TODO marker in code
+
+NOTES:
+- Evaluation covers ONLY the deterministic static analyzer.
+- Gemini/LLM findings are advisory; precision/recall does not apply.
+- FP on TC-010/TC-011 (safe code) indicate false alarms.
+- Scores are real measured values, not fabricated.
+======================================================================

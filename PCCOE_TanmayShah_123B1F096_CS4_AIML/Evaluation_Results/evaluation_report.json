@@ -1,0 +1,326 @@
+{
+  "meta": {
+    "tool": "AutoCodeGuard",
+    "evaluation_type": "Static Analyzer Only",
+    "generated_at": "2026-10-14T13:05:39.134213",
+    "dataset": "C:\\Users\\shahv\\OneDrive\\Desktop\\misc\\projects\\Tata_TechPulse_prj\\AutoCodeGuard\\PCCOE_TanmayShah_123B1F096_CS4_AIML\\Input_Data\\evaluation_dataset.json",
+    "note": "All scores are real measured values. No fabrication."
+  },
+  "metrics": {
+    "aggregate": {
+      "total_tp": 15,
+      "total_fp": 0,
+      "total_fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "per_rule": {
+      "ACG-PY-001": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "ACG-PY-003": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "ACG-RE-001": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "ACG-RE-002": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "ACG-PY-002": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "ACG-RE-003": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "ACG-PY-005": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "ACG-RE-005": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "ACG-RE-006": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "ACG-PY-004": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "ACG-PY-006": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "ACG-RE-004": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    }
+  },
+  "case_results": [
+    {
+      "id": "TC-001",
+      "description": "Python code with eval() and bare except",
+      "language": "python",
+      "expected": [
+        "ACG-PY-001",
+        "ACG-PY-003"
+      ],
+      "detected": [
+        "ACG-PY-001",
+        "ACG-PY-003"
+      ],
+      "true_positives": [
+        "ACG-PY-001",
+        "ACG-PY-003"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "syntax_error": null
+    },
+    {
+      "id": "TC-002",
+      "description": "Hardcoded password and MD5 hash",
+      "language": "python",
+      "expected": [
+        "ACG-RE-001",
+        "ACG-RE-002"
+      ],
+      "detected": [
+        "ACG-RE-001",
+        "ACG-RE-002"
+      ],
+      "true_positives": [
+        "ACG-RE-001",
+        "ACG-RE-002"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "syntax_error": null
+    },
+    {
+      "id": "TC-003",
+      "description": "subprocess with shell=True",
+      "language": "python",
+      "expected": [
+        "ACG-PY-002"
+      ],
+      "detected": [
+        "ACG-PY-002"
+      ],
+      "true_positives": [
+        "ACG-PY-002"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "syntax_error": null
+    },
+    {
+      "id": "TC-004",
+      "description": "SQL query built with string formatting",
+      "language": "python",
+      "expected": [
+        "ACG-RE-003"
+      ],
+      "detected": [
+        "ACG-RE-003"
+      ],
+      "true_positives": [
+        "ACG-RE-003"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "syntax_error": null
+    },
+    {
+      "id": "TC-005",
+      "description": "Mutable default argument",
+      "language": "python",
+      "expected": [
+        "ACG-PY-005"
+      ],
+      "detected": [
+        "ACG-PY-005"
+      ],
+      "true_positives": [
+        "ACG-PY-005"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "syntax_error": null
+    },
+    {
+      "id": "TC-006",
+      "description": "DEBUG=True and print statements",
+      "language": "python",
+      "expected": [
+        "ACG-RE-005",
+        "ACG-RE-006"
+      ],
+      "detected": [
+        "ACG-RE-005",
+        "ACG-RE-006"
+      ],
+      "true_positives": [
+        "ACG-RE-005",
+        "ACG-RE-006"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "syntax_error": null
+    },
+    {
+      "id": "TC-007",
+      "description": "assert used for input validation",
+      "language": "python",
+      "expected": [
+        "ACG-PY-004"
+      ],
+      "detected": [
+        "ACG-PY-004"
+      ],
+      "true_positives": [
+        "ACG-PY-004"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "syntax_error": null
+    },
+    {
+      "id": "TC-008",
+      "description": "os.system() call",
+      "language": "python",
+      "expected": [
+        "ACG-PY-006"
+      ],
+      "detected": [
+        "ACG-PY-006"
+      ],
+      "true_positives": [
+        "ACG-PY-006"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "syntax_error": null
+    },
+    {
+      "id": "TC-009",
+      "description": "Multiple issues: eval + hardcoded secret + bare except",
+      "language": "python",
+      "expected": [
+        "ACG-PY-001",
+        "ACG-PY-003",
+        "ACG-RE-001"
+      ],
+      "detected": [
+        "ACG-PY-001",
+        "ACG-PY-003",
+        "ACG-RE-001"
+      ],
+      "true_positives": [
+        "ACG-PY-001",
+        "ACG-PY-003",
+        "ACG-RE-001"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "syntax_error": null
+    },
+    {
+      "id": "TC-010",
+      "description": "Safe code \u2014 no issues expected",
+      "language": "python",
+      "expected": [],
+      "detected": [],
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [],
+      "syntax_error": null
+    },
+    {
+      "id": "TC-011",
+      "description": "Safe code with explicit exception handling",
+      "language": "python",
+      "expected": [],
+      "detected": [],
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [],
+      "syntax_error": null
+    },
+    {
+      "id": "TC-012",
+      "description": "TODO marker in code",
+      "language": "python",
+      "expected": [
+        "ACG-RE-004"
+      ],
+      "detected": [
+        "ACG-RE-004"
+      ],
+      "true_positives": [
+        "ACG-RE-004"
+      ],
+      "false_positives": [],
+      "false_negatives": [],
+      "syntax_error": null
+    }
+  ]
+}

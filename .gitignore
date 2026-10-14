@@ -3,3 +3,12 @@
 venv/
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+.idea/
+.vscode/
+*.log

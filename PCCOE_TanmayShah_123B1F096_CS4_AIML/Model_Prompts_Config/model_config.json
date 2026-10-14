@@ -1,0 +1,19 @@
+{
+  "provider": "Google Generative AI (Gemini)",
+  "model_name": "gemini-2.0-flash",
+  "runtime_architecture": "External REST API (google-genai Python SDK)",
+  "external_api_dependency": true,
+  "api_key_source": "Environment variable GEMINI_API_KEY loaded via python-dotenv",
+  "retrieval_method": "TF-IDF cosine similarity over a local JSON guideline knowledge base",
+  "sdk_package": "google-genai",
+  "sdk_minimum_version": "0.8.0",
+  "structured_output": "JSON mode via response_mime_type=application/json",
+  "known_limitations": [
+    "Requires a valid GEMINI_API_KEY with quota.",
+    "Gemini-generated line numbers are heuristic and not guaranteed to match submitted code.",
+    "LLM findings are advisory only; not confirmed vulnerabilities.",
+    "Static analysis covers a limited rule set; not a replacement for a certified SAST tool.",
+    "Model availability subject to Google API changes."
+  ],
+  "notes": "Model name is configurable in this file and read at runtime."
+}
