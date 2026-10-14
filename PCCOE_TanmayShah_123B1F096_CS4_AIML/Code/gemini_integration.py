@@ -25,13 +25,17 @@ load_dotenv()
 
 _CONFIG_PATH = Path(__file__).parent.parent / "Model_Prompts_Config" / "model_config.json"
 
+_FALLBACK_MODEL = "gemini-3.8-flash"
+
+
 def _load_model_name() -> str:
+    """Load model name from model_config.json; fall back to gemini-3.8-flash."""
     try:
         with open(_CONFIG_PATH, "r", encoding="utf-8") as fh:
             cfg = json.load(fh)
-        return cfg.get("model_name", "gemini-2.0-flash")
+        return cfg.get("model_name", _FALLBACK_MODEL)
     except Exception:
-        return "gemini-2.0-flash"
+        return _FALLBACK_MODEL
 
 
 MODEL_NAME = _load_model_name()
@@ -80,6 +84,15 @@ _USER_PROMPT_TEMPLATE = textwrap.dedent("""\
     If there are no findings, return an empty findings array.
     Do not fabricate issues that do not exist in the code.
 """)
+
+
+# Ordered list of fallback model names tried when the primary model is unavailable.
+# Primary model is read from model_config.json; these are automatic fallbacks on 503.
+_FALLBACK_MODELS = [
+    "gemini-3.8-flash",
+    "gemini-3.6-flash",
+    "gemini-3.5-flash",
+]
 
 
 # ---------------------------------------------------------------------------
@@ -133,35 +146,82 @@ class GeminiReviewer:
             code=source_code,
         )
 
-        try:
-            import google.genai.types as types
+        # Build the ordered list of models to try: configured model first, then fallbacks
+        models_to_try = [MODEL_NAME]
+        for fb in _FALLBACK_MODELS:
+            if fb != MODEL_NAME:
+                models_to_try.append(fb)
 
-            response = client.models.generate_content(
-                model=MODEL_NAME,
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    system_instruction=_SYSTEM_PROMPT,
-                    response_mime_type="application/json",
-                    temperature=0.2,
-                    max_output_tokens=4096,
-                ),
-            )
+        last_error: str = "Gemini API error: unknown error."
+        import google.genai.types as types
 
-            raw_text = response.text or ""
-            return self._parse_response(raw_text)
+        for attempt_model in models_to_try:
+            try:
+                response = client.models.generate_content(
+                    model=attempt_model,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        system_instruction=_SYSTEM_PROMPT,
+                        response_mime_type="application/json",
+                        temperature=0.2,
+                        max_output_tokens=4096,
+                    ),
+                )
+                raw_text = response.text or ""
+                result = self._parse_response(raw_text)
+                # Annotate which model actually responded if it differed from configured
+                if attempt_model != MODEL_NAME:
+                    result["model_used"] = attempt_model
+                    result["model_note"] = (
+                        f"Primary model '{MODEL_NAME}' was unavailable; "
+                        f"responded via fallback '{attempt_model}'."
+                    )
+                else:
+                    result["model_used"] = attempt_model
+                return result
 
-        except Exception as exc:
-            err_str = str(exc)
-            # Provide helpful messages for common errors
-            if "API_KEY_INVALID" in err_str or "401" in err_str:
-                friendly = "Invalid API key. Check your GEMINI_API_KEY in .env."
-            elif "QUOTA" in err_str.upper() or "429" in err_str:
-                friendly = "API quota exceeded. Wait and retry, or check your billing."
-            elif "ConnectionError" in err_str or "timeout" in err_str.lower():
-                friendly = "Network error connecting to Gemini. Check your internet connection."
-            else:
-                friendly = f"Gemini API error: {err_str}"
-            return self._error_response(friendly)
+            except Exception as exc:
+                err_str = str(exc)
+                # Only retry on 503/UNAVAILABLE; all other errors are final
+                if "503" in err_str or "UNAVAILABLE" in err_str:
+                    last_error = err_str
+                    continue  # try next fallback model
+                # Non-retriable errors — classify and return immediately
+                if "API_KEY_INVALID" in err_str or "401" in err_str:
+                    friendly = (
+                        "Invalid API key. Check your GEMINI_API_KEY in .env and "
+                        "ensure it is active at https://aistudio.google.com/app/apikey"
+                    )
+                elif "QUOTA" in err_str.upper() or "429" in err_str or "RESOURCE_EXHAUSTED" in err_str:
+                    friendly = (
+                        "API quota exceeded or rate-limited (HTTP 429). "
+                        "Wait a minute and retry, or check your billing at "
+                        "https://console.cloud.google.com/billing"
+                    )
+                elif "404" in err_str or "NOT_FOUND" in err_str:
+                    friendly = (
+                        f"Model '{attempt_model}' was not found (HTTP 404). "
+                        "The model may have been deprecated. Update 'model_name' in "
+                        "Model_Prompts_Config/model_config.json. "
+                        f"Currently available models include: gemini-3.8-flash, gemini-3.6-flash. "
+                        f"API message: {err_str[:300]}"
+                    )
+                elif "ConnectionError" in err_str or "timeout" in err_str.lower() or "ConnectError" in err_str:
+                    friendly = (
+                        "Network error connecting to the Gemini API. "
+                        "Check your internet connection and try again."
+                    )
+                else:
+                    friendly = f"Gemini API error: {err_str}"
+                return self._error_response(friendly)
+
+        # All models returned 503 — report the transient error
+        models_tried = ", ".join(models_to_try)
+        return self._error_response(
+            f"All Gemini models are temporarily unavailable (HTTP 503 — high demand). "
+            f"Models tried: {models_tried}. "
+            "This is a transient server-side issue. Wait 30–60 seconds and try again."
+        )
 
     @staticmethod
     def _parse_response(raw_text: str) -> dict:

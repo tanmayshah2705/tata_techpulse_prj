@@ -1,19 +1,24 @@
 {
   "provider": "Google Generative AI (Gemini)",
-  "model_name": "gemini-2.0-flash",
+  "model_name": "gemini-3.8-flash",
+  "previous_model_name": "gemini-2.0-flash",
+  "deprecation_note": "gemini-2.0-flash and gemini-2.5-flash are no longer available to new users. The API recommends gemini-3.8-flash as the successor. Updated 2026-10-14.",
   "runtime_architecture": "External REST API (google-genai Python SDK)",
   "external_api_dependency": true,
   "api_key_source": "Environment variable GEMINI_API_KEY loaded via python-dotenv",
   "retrieval_method": "TF-IDF cosine similarity over a local JSON guideline knowledge base",
   "sdk_package": "google-genai",
+  "sdk_installed_version": "2.30.1",
   "sdk_minimum_version": "0.8.0",
   "structured_output": "JSON mode via response_mime_type=application/json",
+  "api_method": "client.models.generate_content with GenerateContentConfig",
   "known_limitations": [
     "Requires a valid GEMINI_API_KEY with quota.",
+    "gemini-3.8-flash may return HTTP 503 (temporarily unavailable) during high-demand periods; this is transient — retry after 30 seconds.",
     "Gemini-generated line numbers are heuristic and not guaranteed to match submitted code.",
     "LLM findings are advisory only; not confirmed vulnerabilities.",
     "Static analysis covers a limited rule set; not a replacement for a certified SAST tool.",
-    "Model availability subject to Google API changes."
+    "Model availability subject to Google API changes; update model_name here if a 404 NOT_FOUND error is received."
   ],
-  "notes": "Model name is configurable in this file and read at runtime."
+  "notes": "Model name is configurable in this file and read at runtime by gemini_integration.py."
 }
